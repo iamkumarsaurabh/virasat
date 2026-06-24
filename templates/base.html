@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0A0A0A" />
+
+  <title>{% block title %}VIRASAT — Modern Indian Fine Dining{% endblock %}</title>
+  
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+  <!-- New Fonts: Fraunces & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: { DEFAULT: '#D4AF37', light: '#E8D081', dark: '#B8952B' },
+            bg: { dark: '#0A0A0A', surface: '#141414', card: '#1E1E1E', light: '#F9F8F6' },
+            border: { dark: '#2A2A2A', light: '#E5E5E5' }
+          },
+          fontFamily: {
+            fraunces: ['Fraunces', 'serif'],
+            jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          borderRadius: {
+            '2xl': '1rem',
+            '3xl': '1.5rem',
+            '4xl': '2rem',
+          }
+        },
+      },
+    };
+  </script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  
+  <!-- Page Transition Script (Head) -->
+  <script>
+    // Fade in on load
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add("page-loaded");
+    });
+    
+    // Intercept clicks for fade out
+    document.addEventListener("click", (e) => {
+      const link = e.target.closest('a');
+      if (link && link.href && link.href.startsWith(window.location.origin) && !link.hash && link.target !== '_blank') {
+        e.preventDefault();
+        document.body.classList.remove("page-loaded");
+        document.body.classList.add("page-leaving");
+        setTimeout(() => {
+          window.location = link.href;
+        }, 500);
+      }
+    });
+    
+    // Handle back button caching
+    window.addEventListener("pageshow", function (event) {
+      if (event.persisted) {
+        document.body.classList.remove("page-leaving");
+        document.body.classList.add("page-loaded");
+      }
+    });
+  </script>
+</head>
+<body class="bg-bg-dark text-gray-200 font-jakarta antialiased overflow-hidden">
+
+  <!-- Splash Screen Pre-loader -->
+  <div id="splash-screen" class="fixed inset-0 z-[9999] bg-[#0A0A0A] flex flex-col items-center justify-center transition-opacity duration-1000 ease-in-out">
+    <div class="relative flex flex-col items-center gap-6">
+      <h1 class="font-fraunces text-4xl sm:text-6xl text-white tracking-wide opacity-0 transform translate-y-4 transition-all duration-1000 ease-out" id="splash-logo">Virasat.</h1>
+      <div class="w-12 h-[1px] bg-gold opacity-0 transition-all duration-1000 delay-300" id="splash-line"></div>
+    </div>
+  </div>
+
+  <!-- Page Transition Overlay -->
+  <div class="page-transition-overlay"></div>
+
+  <!-- ══ NAV ════════════════════════════════════════════════════════════════ -->
+  <div id="nav-container" class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 pb-4 pointer-events-none transition-all duration-500">
+    <nav id="navbar" class="w-full max-w-7xl px-6 sm:px-10 rounded-[2rem] pointer-events-auto transition-all duration-500">
+      <div class="flex items-center justify-between h-[70px]">
+
+        <!-- Logo -->
+        <a href="/" class="shrink-0 flex items-center">
+          <span class="nav-logo font-fraunces text-2xl text-white tracking-wide transition-all duration-500">Virasat.</span>
+        </a>
+
+        <!-- Desktop links -->
+        <div class="nav-links hidden md:flex items-center gap-2 transition-all duration-500">
+          <a href="/"        class="nav-link {% if request.endpoint == 'main.index' %}nav-active{% endif %}">Home</a>
+          <a href="/menu"    class="nav-link {% if request.endpoint == 'menu.index' %}nav-active{% endif %}">Menu</a>
+          <a href="/reserve" class="nav-link {% if request.endpoint == 'reservations.index' %}nav-active{% endif %}">Reserve</a>
+          <a href="/contact" class="nav-link {% if request.endpoint == 'contact.index' %}nav-active{% endif %}">Contact</a>
+        </div>
+
+        <div class="hidden md:flex shrink-0">
+          <a href="/reserve" class="btn-primary text-sm px-6 py-2.5 shadow-lg">Book a Table</a>
+        </div>
+
+        <!-- Hamburger -->
+        <button id="hamburger" class="md:hidden flex flex-col gap-1.5 justify-center items-end w-8 h-8 focus:outline-none z-50 pointer-events-auto">
+          <span class="w-6 h-0.5 bg-white rounded-full"></span>
+          <span class="w-4 h-0.5 bg-white rounded-full"></span>
+          <span class="w-6 h-0.5 bg-white rounded-full"></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu (Liquid Glass Dropdown Capsule) -->
+  <div id="mobile-menu" class="fixed top-[90px] left-4 right-4 z-40 hidden flex-col items-center bg-[#141414]/80 backdrop-blur-[24px] saturate-[180%] border border-white/10 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.6)] transition-all duration-500 opacity-0 transform -translate-y-4 py-10">
+    <div class="flex flex-col items-center gap-8 text-xl font-jakarta font-medium tracking-wider">
+      <a href="/" class="text-white hover:text-gold transition-colors">Home</a>
+      <a href="/menu" class="text-white hover:text-gold transition-colors">Menu</a>
+      <a href="/reserve" class="text-white hover:text-gold transition-colors">Reservations</a>
+      <a href="/contact" class="text-white hover:text-gold transition-colors">Contact</a>
+    </div>
+  </div>
+
+  <!-- ══ CONTENT ════════════════════════════════════════════════════════════ -->
+  <main>{% block content %}{% endblock %}</main>
+
+  <!-- ══ FOOTER ════════════════════════════════════════════════════════════ -->
+  <footer class="bg-bg-surface border-t border-border-dark mt-20 rounded-t-[3rem] mx-2 sm:mx-4 mb-2 sm:mb-4">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10 py-16 lg:py-20 text-center sm:text-left">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
+
+        <!-- Brand -->
+        <div class="space-y-4 container-align sm:items-start sm:text-left">
+          <p class="font-fraunces text-3xl text-white">Virasat.</p>
+          <p class="text-gray-400 text-sm max-w-xs leading-relaxed">Modern fine dining rooted in royal Indian traditions. Discover the extraordinary.</p>
+        </div>
+
+        <!-- Links -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+          <a href="/menu" class="text-gray-400 hover:text-white transition-colors">Menu</a>
+          <a href="/reserve" class="text-gray-400 hover:text-white transition-colors">Reservations</a>
+          <a href="/contact" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="flex justify-center sm:justify-end">
+          <form id="newsletter-form" class="flex w-full max-w-sm gap-2 bg-bg-card border border-border-dark p-1 rounded-full">
+            <input type="email" id="newsletter-email" placeholder="Email address" required class="bg-transparent text-white px-4 py-2 w-full text-sm outline-none font-jakarta" />
+            <button type="submit" class="bg-white text-black px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors">Join</button>
+          </form>
+        </div>
+
+      </div>
+      
+      <div class="border-t border-border-dark mt-16 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+        <p><a href="/admin" class="hover:text-white transition-colors" title="Owner Portal">© 2026 Virasat. All rights reserved.</a></p>
+        <div class="flex gap-4">
+          <a href="/privacy" class="hover:text-white transition-colors">Privacy</a>
+          <a href="/terms" class="hover:text-white transition-colors">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="fixed bottom-6 right-6 z-[100] flex flex-col gap-3 pointer-events-none max-w-sm w-full"></div>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

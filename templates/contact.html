@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Contact — Virasat{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<section class="relative pt-32 pb-10 text-center m-2 sm:m-4 rounded-[2rem] sm:rounded-[3rem] overflow-hidden">
+  <div class="absolute inset-0 bg-shader z-[-1]"></div>
+  <div class="max-w-3xl mx-auto px-6 relative z-10">
+    <span class="section-label">Get in Touch</span>
+    <h1 class="font-fraunces text-white mb-4" style="font-size:clamp(2.5rem,6vw,4.5rem); line-height:1.1;">Contact Us</h1>
+    <p class="font-jakarta font-light text-gray-400 max-w-md mx-auto">For private events, large bookings, or general enquiries.</p>
+  </div>
+</section>
+
+<!-- Content -->
+<section class="pb-24">
+  <div class="max-w-6xl mx-auto px-6 sm:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+
+      <!-- Form -->
+      <div class="bg-bg-card border border-border-dark rounded-[2rem] p-8 sm:p-10 shadow-xl reveal-up">
+        <form id="contact-form" action="{{ url_for('contact.index') }}" method="POST" class="space-y-6">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+          
+          <!-- Anti-spam Honeypot -->
+          <div style="display:none;" aria-hidden="true">
+            <label for="website_url">Website</label>
+            <input type="text" name="website_url" id="website_url" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="js_timestamp" id="js_timestamp" value="">
+          <script>document.getElementById('js_timestamp').value = Date.now();</script>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label for="con-name" class="form-label">Name</label>
+              <input type="text" id="con-name" name="name" class="form-input" required />
+            </div>
+            <div>
+              <label for="con-email" class="form-label">Email</label>
+              <input type="email" id="con-email" name="email" class="form-input" required />
+            </div>
+          </div>
+          <div>
+            <label for="con-subject" class="form-label">Subject</label>
+            <input type="text" id="con-subject" name="subject" class="form-input" required />
+          </div>
+          <div>
+            <label for="con-message" class="form-label">Message</label>
+            <textarea id="con-message" name="message" rows="5" class="form-input resize-none" required></textarea>
+          </div>
+          <button type="submit" id="contact-submit" class="btn-primary w-full py-3.5">
+            <span id="contact-btn-text">Send Message</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Info -->
+      <div class="space-y-10 lg:pt-8 reveal-up" style="transition-delay: 0.1s;">
+        
+        <div>
+          <h3 class="font-fraunces text-2xl text-white mb-4">Location</h3>
+          <p class="font-jakarta text-gray-400 font-light">{{ info.address }}</p>
+        </div>
+
+        <div>
+          <h3 class="font-fraunces text-2xl text-white mb-4">Opening Hours</h3>
+          <ul class="space-y-3">
+            {% for day, hours in info.hours %}
+            <li class="flex justify-between border-b border-border-dark pb-2">
+              <span class="text-gray-400 font-light">{{ day }}</span>
+              <span class="text-white">{{ hours }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="font-fraunces text-2xl text-white mb-4">Contact Info</h3>
+          <div class="space-y-2">
+            <p class="text-gray-400 font-light">Email: <a href="mailto:{{ info.email }}" class="text-white hover:text-gold transition-colors">{{ info.email }}</a></p>
+            <p class="text-gray-400 font-light">Phone: <a href="tel:{{ info.phone_primary }}" class="text-white hover:text-gold transition-colors">{{ info.phone_primary }}</a></p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+{% endblock %}

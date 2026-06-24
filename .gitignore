@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables (DO NOT UPLOAD SECRETS!)
+.env
+
+# Flask Instance folder (Contains local SQLite database)
+instance/
+*.sqlite
+*.sqlite3
+*.db
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# IDE files
+.vscode/
+.idea/

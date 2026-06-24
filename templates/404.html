@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}404 Not Found — Virasat{% endblock %}
+
+{% block content %}
+<section class="relative min-h-[95vh] flex items-center justify-center m-2 sm:m-4 rounded-[2rem] sm:rounded-[3rem] overflow-hidden">
+  <div class="absolute inset-0 bg-shader z-[-1]"></div>
+  
+  <div class="relative z-10 w-full max-w-xl mx-auto px-6 text-center">
+    <div class="bg-bg-surface/60 backdrop-blur-[24px] saturate-[180%] border border-white/10 rounded-[3rem] p-12 sm:p-16 shadow-[0_20px_40px_rgba(0,0,0,0.5)] border border-border-dark relative overflow-hidden">
+      
+      <!-- Decorative element -->
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+
+      <h1 class="font-fraunces text-7xl sm:text-8xl text-gold mb-4 italic drop-shadow-2xl">404</h1>
+      <p class="font-fraunces text-3xl sm:text-4xl text-white mb-6">Page Not Found</p>
+      
+      <p class="font-jakarta font-light text-gray-400 mb-10 text-lg leading-relaxed max-w-md mx-auto">
+        The page you are looking for has drifted into history. Let us guide you back to the present.
+      </p>
+      
+      <a href="/" class="btn-primary inline-flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        Return to the Grand Court
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

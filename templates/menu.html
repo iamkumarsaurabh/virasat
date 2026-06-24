@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Menu — Virasat{% endblock %}
+
+{% block content %}
+
+<!-- Page Hero -->
+<section class="relative pt-32 pb-16 text-center m-2 sm:m-4 rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl">
+  <div class="absolute inset-0 bg-shader z-[-1]"></div>
+  <!-- Soft noise overlay -->
+  <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E'); mix-blend-mode: overlay;"></div>
+
+  <div class="max-w-4xl mx-auto px-6 relative z-10">
+    <span class="section-label">A Culinary Journey</span>
+    <h1 class="font-fraunces text-white mb-4" style="font-size:clamp(2.5rem,6vw,4.5rem); line-height:1.1;">Our Royal Menu</h1>
+    <p class="font-jakarta font-light text-gray-400 max-w-lg mx-auto">Curated selections bridging five centuries of heritage with modern fine dining.</p>
+  </div>
+</section>
+
+<!-- Menu Content -->
+<section class="py-12">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 flex flex-col lg:flex-row gap-8 lg:gap-12 relative items-start">
+
+    <!-- Vertical Filter Sidebar (Liquid Glass Capsule) -->
+    <div class="filter-bar sticky top-[100px] z-30 lg:w-56 shrink-0 bg-[#141414]/60 backdrop-blur-[24px] saturate-[180%] border border-white/10 rounded-[2rem] p-3 shadow-[0_20px_40px_rgba(0,0,0,0.5),inset_0_0_0_1px_rgba(255,255,255,0.05)] flex flex-wrap lg:flex-col justify-center lg:justify-start gap-2 w-full lg:w-auto">
+      <button class="filter-tab active text-left" data-category="all">All Dishes</button>
+      <button class="filter-tab text-left" data-category="starters">Starters</button>
+      <button class="filter-tab text-left" data-category="mains">Main Course</button>
+      <button class="filter-tab text-left" data-category="biryanis">Biryanis</button>
+      <button class="filter-tab text-left" data-category="desserts">Desserts</button>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 w-full">
+      
+      <!-- Legend -->
+      <div class="flex items-center gap-6 mb-12 text-xs text-text-secondary font-jakarta font-medium uppercase tracking-wider pl-2">
+        <div class="flex items-center gap-2"><span class="veg-dot veg"></span> Vegetarian</div>
+        <div class="flex items-center gap-2"><span class="veg-dot non-veg"></span> Non-Vegetarian</div>
+      </div>
+
+      <!-- Menu Grid -->
+      <div id="menu-grid" class="space-y-20">
+
+        {% set categories = [
+          ('starters', 'Starters'),
+          ('mains',    'Royal Main Course'),
+          ('biryanis', 'Biryanis'),
+          ('desserts', 'Desserts')
+        ] %}
+
+        {% for cat_key, cat_name in categories %}
+        <div class="category-section" data-category-group="{{ cat_key }}">
+
+          <div class="mb-10 reveal-up pl-2">
+            <h2 class="font-fraunces text-3xl text-white">{{ cat_name }}</h2>
+            <div class="w-12 h-0.5 bg-gold mt-4 rounded-full"></div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {% for item in menu_items if item.category == cat_key %}
+            <div class="modern-card reveal-up bg-bg-card border border-border-dark flex flex-col h-full" data-category="{{ item.category }}">
+              <div class="overflow-hidden h-48 relative shrink-0">
+                <img src="{{ url_for('static', filename='images/' + item.image) }}" alt="{{ item.name }}" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" loading="lazy" />
+                <div class="absolute top-3 right-3 bg-black/60 backdrop-blur-sm p-1.5 rounded-md">
+                  <span class="veg-dot {% if item.is_veg %}veg{% else %}non-veg{% endif %}"></span>
+                </div>
+              </div>
+              <div class="modern-card-body flex flex-col flex-1">
+                <h3 class="font-fraunces text-xl text-white mb-2">{{ item.name }}</h3>
+                <p class="font-jakarta text-sm text-gray-400 font-light flex-1 mb-4">{{ item.description }}</p>
+                <div class="flex items-center justify-between pt-4 border-t border-border-dark mt-auto">
+                  <span class="font-fraunces text-gold text-lg">₹{{ item.price }}</span>
+                  {% if item.spice != 'none' %}
+                  <span class="text-[0.65rem] uppercase tracking-widest text-gray-500 font-semibold">{{ item.spice }}</span>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+        </div>
+        {% endfor %}
+
+      </div>
+
+      <!-- Bottom CTA -->
+      <div class="text-center mt-20 pt-12 border-t border-border-dark reveal-up">
+        <p class="font-fraunces italic text-gray-400 text-xl mb-6">Experience the grandeur of royal dining.</p>
+        <a href="/reserve" class="btn-primary">Reserve a Table</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+{% endblock %}

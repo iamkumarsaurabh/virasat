@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Login — Virasat{% endblock %}
+
+{% block content %}
+<section class="relative min-h-[95vh] flex items-center justify-center m-2 sm:m-4 rounded-[2rem] sm:rounded-[3rem] overflow-hidden">
+  <div class="absolute inset-0 bg-shader z-[-1]"></div>
+  <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E'); mix-blend-mode: overlay;"></div>
+
+  <div class="relative z-10 w-full max-w-md mx-auto px-6">
+    <div class="bg-bg-surface/80 backdrop-blur-[24px] saturate-[180%] border border-white/10 rounded-[2rem] p-8 sm:p-10 shadow-2xl">
+      <div class="text-center mb-8">
+        <h1 class="font-fraunces text-3xl text-white mb-2">Owner Portal</h1>
+        <p class="font-jakarta text-sm text-gray-400">Please authenticate to continue.</p>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="mb-6 px-4 py-3 rounded-lg text-sm text-center {% if category == 'error' %}bg-red-500/20 text-red-300 border border-red-500/30{% else %}bg-green-500/20 text-green-300 border border-green-500/30{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="{{ url_for('admin.login') }}" class="space-y-6">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div>
+          <label for="username" class="form-label text-white">Username</label>
+          <input type="text" id="username" name="username" class="form-input bg-bg-dark/50 border-border-dark focus:border-gold text-white" required />
+        </div>
+        <div>
+          <label for="password" class="form-label text-white">Password</label>
+          <input type="password" id="password" name="password" class="form-input bg-bg-dark/50 border-border-dark focus:border-gold text-white" required />
+        </div>
+        <button type="submit" class="btn-primary w-full py-3">Login Securely</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

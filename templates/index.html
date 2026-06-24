@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Virasat — Modern Indian Fine Dining{% endblock %}
+
+{% block content %}
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     HERO — Animated Shader Background (Pre-opening)
+     ════════════════════════════════════════════════════════════════════════ -->
+<section id="hero" class="relative min-h-[85vh] lg:min-h-[95vh] flex items-center justify-center m-2 sm:m-4 rounded-[2rem] sm:rounded-[3rem] overflow-hidden">
+
+  <!-- Animated Shader -->
+  <div class="absolute inset-0 bg-shader"></div>
+
+  <!-- Soft noise overlay to make the shader look textured and premium -->
+  <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E'); mix-blend-mode: overlay;"></div>
+
+  <!-- Content — Centered -->
+  <div class="relative z-10 w-full max-w-4xl mx-auto px-6 text-center">
+
+    <div class="hero-eyebrow inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md mb-8">
+      <span class="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
+      <span class="font-jakarta text-xs font-semibold tracking-widest uppercase text-white">Opening Diwali 2026</span>
+    </div>
+
+    <h1 class="hero-title font-fraunces text-white mb-6" style="font-size:clamp(3.5rem,8vw,7rem); line-height:1.0;">
+      A Royal Feast,<br>
+      <span class="italic font-light text-gold-light">Reimagined.</span>
+    </h1>
+
+    <p class="hero-body font-jakarta text-gray-300 max-w-xl mx-auto mb-10 text-lg sm:text-xl font-light">
+      Discover five centuries of India's royal culinary heritage presented in a distinctly modern setting.
+    </p>
+
+    <div class="hero-cta flex flex-col sm:flex-row gap-4 justify-center items-center">
+      <a href="/reserve" class="btn-primary w-full sm:w-auto">Book Your Table</a>
+      <a href="/menu" class="btn-ghost text-white w-full sm:w-auto border-white/30">View the Menu</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     OUR STORY — Dark section, elegant rounded cards
+     ════════════════════════════════════════════════════════════════════════ -->
+<section id="story" class="section-padding bg-bg-surface m-2 sm:m-4 rounded-[2rem] sm:rounded-[3rem]">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Text -->
+      <div class="reveal-up space-y-6 container-align lg:items-start lg:text-left text-white">
+        <span class="section-label">The Vision</span>
+        <h2 class="section-title text-white">
+          Where Heritage Meets <br><span class="italic text-gold-dark">Modernity</span>
+        </h2>
+        
+        <p class="font-jakarta text-gray-300 leading-relaxed text-lg font-light max-w-lg">
+          Virasat bridges the gap between ancient royal kitchens and contemporary fine dining. We use traditional clay tandoors and slow-cooking dum techniques, but our plating, atmosphere, and service are resolutely modern.
+        </p>
+
+        <a href="/about" class="btn-ghost mt-4">Discover Our Story</a>
+      </div>
+
+      <!-- Image Grid -->
+      <div class="reveal-up relative h-[500px]">
+        <div class="absolute inset-0 rounded-[2rem] overflow-hidden shadow-2xl border border-border-dark">
+          <!-- Updated to realistic story image -->
+          <img src="{{ url_for('static', filename='images/story_v4.png') }}" class="w-full h-full object-cover" alt="Chef working" />
+        </div>
+        <!-- Decorative floating element -->
+        <div class="absolute -bottom-6 -left-6 bg-bg-card p-6 rounded-[1.5rem] shadow-xl max-w-[200px] hidden sm:block border border-border-dark">
+          <p class="font-fraunces text-2xl text-white mb-1">Modern Indian</p>
+          <p class="font-jakarta text-xs text-gray-400 uppercase tracking-wider">Culinary Art</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     CHEF'S SPECIALS — Dark section, modern cards, matching rounding
+     ════════════════════════════════════════════════════════════════════════ -->
+<section id="specials" class="section-padding bg-bg-surface m-2 sm:m-4 rounded-[2rem] sm:rounded-[3rem]">
+  <div class="max-w-7xl mx-auto px-6 sm:px-10 py-12">
+
+    <div class="container-align mb-16 reveal-up">
+      <span class="section-label">Signature Dishes</span>
+      <h2 class="section-title text-white">The Masterpieces</h2>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Dish 1 -->
+      <div class="modern-card reveal-up bg-bg-card border border-border-dark">
+        <div class="overflow-hidden">
+          <img src="{{ url_for('static', filename='images/dish1_v4.png') }}" alt="Gilafi Seekh Kebab" class="modern-card-img" />
+        </div>
+        <div class="modern-card-body">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="font-fraunces text-2xl text-white">Gilafi Seekh Kebab</h3>
+            <span class="veg-dot non-veg mt-1.5"></span>
+          </div>
+          <p class="text-text-secondary font-light text-sm mb-6">Minced lamb wrapped in julienned bell peppers, slow-kissed in our clay tandoor over live coals.</p>
+          <div class="flex items-center justify-between border-t border-border-dark pt-4">
+            <span class="font-fraunces text-gold text-xl">₹420</span>
+            <span class="text-[0.65rem] uppercase tracking-widest text-gray-500 font-semibold">Starter</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dish 2 -->
+      <div class="modern-card reveal-up bg-bg-card border border-border-dark" style="transition-delay:0.1s;">
+        <div class="overflow-hidden">
+          <img src="{{ url_for('static', filename='images/dish2_v4.png') }}" alt="Hyderabadi Dum Biryani" class="modern-card-img" />
+        </div>
+        <div class="modern-card-body">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="font-fraunces text-2xl text-white">Dum Biryani</h3>
+            <span class="veg-dot non-veg mt-1.5"></span>
+          </div>
+          <p class="text-text-secondary font-light text-sm mb-6">Aged Basmati sealed with marinated lamb, fried shallots, mint, and saffron milk.</p>
+          <div class="flex items-center justify-between border-t border-border-dark pt-4">
+            <span class="font-fraunces text-gold text-xl">₹750</span>
+            <span class="text-[0.65rem] uppercase tracking-widest text-gray-500 font-semibold">Main</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dish 3 -->
+      <div class="modern-card reveal-up bg-bg-card border border-border-dark" style="transition-delay:0.2s;">
+        <div class="overflow-hidden">
+          <img src="{{ url_for('static', filename='images/dish3_v4.png') }}" alt="Gulab Jamun" class="modern-card-img" />
+        </div>
+        <div class="modern-card-body">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="font-fraunces text-2xl text-white">Gulab Jamun</h3>
+            <span class="veg-dot veg mt-1.5"></span>
+          </div>
+          <p class="text-text-secondary font-light text-sm mb-6">Soft khoya dumplings fried to a deep amber, immersed in warm rose-and-saffron sugar syrup.</p>
+          <div class="flex items-center justify-between border-t border-border-dark pt-4">
+            <span class="font-fraunces text-gold text-xl">₹280</span>
+            <span class="text-[0.65rem] uppercase tracking-widest text-gray-500 font-semibold">Dessert</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    
+    <div class="text-center mt-12 reveal-up">
+      <a href="/menu" class="btn-ghost">View Complete Menu</a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Simple hero animation on load
+  document.addEventListener("DOMContentLoaded", () => {
+    gsap.from(".hero-eyebrow", { y: 20, opacity: 0, duration: 0.8, delay: 0.2, ease: "power3.out" });
+    gsap.from(".hero-title", { y: 30, opacity: 0, duration: 1, delay: 0.4, ease: "power3.out" });
+    gsap.from(".hero-body", { y: 20, opacity: 0, duration: 0.8, delay: 0.6, ease: "power3.out" });
+    gsap.from(".hero-cta", { y: 20, opacity: 0, duration: 0.8, delay: 0.8, ease: "power3.out" });
+  });
+</script>
+{% endblock %}
