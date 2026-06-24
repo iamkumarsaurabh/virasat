@@ -28,6 +28,8 @@
       <button class="filter-tab text-left" data-category="mains">Main Course</button>
       <button class="filter-tab text-left" data-category="biryanis">Biryanis</button>
       <button class="filter-tab text-left" data-category="desserts">Desserts</button>
+      <button class="filter-tab text-left" data-category="thalis">Shahi Thalis</button>
+      <button class="filter-tab text-left" data-category="beverages">Beverages</button>
     </div>
 
     <!-- Main Content Area -->
@@ -35,8 +37,7 @@
       
       <!-- Legend -->
       <div class="flex items-center gap-6 mb-12 text-xs text-text-secondary font-jakarta font-medium uppercase tracking-wider pl-2">
-        <div class="flex items-center gap-2"><span class="veg-dot veg"></span> Vegetarian</div>
-        <div class="flex items-center gap-2"><span class="veg-dot non-veg"></span> Non-Vegetarian</div>
+        <div class="flex items-center gap-2"><span class="veg-dot veg"></span> Pure Vegetarian</div>
       </div>
 
       <!-- Menu Grid -->
@@ -46,7 +47,9 @@
           ('starters', 'Starters'),
           ('mains',    'Royal Main Course'),
           ('biryanis', 'Biryanis'),
-          ('desserts', 'Desserts')
+          ('desserts', 'Desserts'),
+          ('thalis',   'Shahi Thalis'),
+          ('beverages', 'Beverages')
         ] %}
 
         {% for cat_key, cat_name in categories %}

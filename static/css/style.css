@@ -360,6 +360,14 @@ body {
   animation: slowPan 20s ease infinite;
 }
 
+/* Fix mobile jitter by disabling heavy shader animation on small screens */
+@media (max-width: 768px) {
+  .bg-shader {
+    animation: none;
+    background-size: auto;
+  }
+}
+
 /* ── 13. Mobile Menu Overlay ─────────────────────────────────────────────── */
 #mobile-menu.open {
   opacity: 1 !important;
